@@ -10,7 +10,7 @@ export class Router {
 
   public register(path: string, handler: Handler) {
     this.routes[path] = handler;
-  }
+  };
 
   public route(rawRequest: string): string {
     const request = new Request(rawRequest); 
@@ -18,17 +18,19 @@ export class Router {
 
     // Handle the dynamic /echo/{string} route
     if (path.startsWith('/echo/')) {
-      const dynamicPart = path.replace('/echo/', '');
-      const handler = new EchoHandler(dynamicPart);
+      const str = path.replace('/echo/', '');
+      const handler = new EchoHandler(str);
       return handler.handle();
     }
 
     // Handle registered routes
-    const handler = this.routes[path];
-    if (handler) {
-      return handler.handle(request); 
+    for (const route in this.routes) {
+      if (path === route || path.startsWith(`${route}/`)) {
+        const handler = this.routes[route];
+        return handler.handle(request);
+      }
     }
-
     return 'HTTP/1.1 404 Not Found\r\n\r\n';
-  }
+
+  };
 }
