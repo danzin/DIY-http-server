@@ -17,7 +17,8 @@ const server = new Server(port, hostname, router);
 New routes are registered with the router's `.register()` method: 
 
 ```
-router.register('/static', new FileHandler('./public')); //FileHandler accepts base path as a parameter
-router.register('/', new RootHandler());
+router.register('/files', new GetFileHandler('./public'), 'GET');
+router.register('/files', new PostFileHandler(), 'POST');
 ```
 
+`Router` dynamically checks the request's method and calls the appropriate registered handler. 
