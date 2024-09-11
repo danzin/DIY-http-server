@@ -13,11 +13,11 @@ export class GetFileHandler implements Handler {
   }
 
   public handle(request: Request): string {
-    let filePath = path.join(this.basePath, request.path.replace('/files', ''));
+    let filePath = path.join(this.basePath, request.getPath().replace('/files', ''));
     console.log('filePath:', filePath)
 
     // Set default file for root path requests
-    if (request.path === '/') {
+    if (request.getPath() === '/') {
       filePath = path.join(this.basePath, 'index.html');
     }
 
@@ -39,7 +39,7 @@ export class GetFileHandler implements Handler {
 export class PostFileHandler implements Handler {
 
   public handle(request: Request): string {
-    const parts = request.path.split('/');
+    const parts = request.getPath().split('/');
     console.log('parts: ',parts)
     const filename = parts[2];
 
@@ -49,7 +49,7 @@ export class PostFileHandler implements Handler {
     const filePath = path.join(__dirname, '..', 'public/uploads' , filename);
     console.log(filePath)
     try {
-      fs.writeFileSync(filePath, request.body, 'utf8');
+      fs.writeFileSync(filePath, request.getBody(), 'utf8');
       return HttpStatus.CREATED;
     } catch (err) {
       console.error('Error saving file:', err);

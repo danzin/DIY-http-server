@@ -22,3 +22,8 @@ router.register('/files', new PostFileHandler(), 'POST');
 ```
 
 `Router` dynamically checks the request's method and calls the appropriate registered handler. 
+
+By default, `POST` requests to `/files/filename` with `--data` attached save the data to file in `/public/uploads/filename`. Uploaded file can be retrieved with `GET` request to `/files/uploads/filename`
+
+
+

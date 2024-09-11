@@ -17,9 +17,9 @@ export class Router {
 
   public route(rawRequest: string): string {
     const request = new Request(rawRequest);
-    const path = request.path;
+    const path = request.getPath();
     const method = request.getMethod(); 
-    console.log(`Incoming request method: ${request.getMethod}, path: ${path}`);
+    console.log(`Incoming request method: ${method}, path: ${path}`);
 
 
     if (path.startsWith('/echo/')) {
