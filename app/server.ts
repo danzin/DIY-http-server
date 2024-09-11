@@ -30,6 +30,7 @@ export class Server {
     const response = this.router.route(rawRequest);
     socket.write(response);
     socket.end(() => console.log('Connection closed'));
-  };
+  }
 
+  
 }

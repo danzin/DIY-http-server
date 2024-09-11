@@ -1,5 +1,6 @@
 import { Request } from "./request";
 import { ResponseBuilder } from "./responseBuilder";
+import { HttpStatus } from "./types";
 
 export interface Handler {
   handle(request: Request): string;
@@ -7,7 +8,7 @@ export interface Handler {
 
 export class RootHandler implements Handler {
   handle(): string {
-    return 'HTTP/1.1 200 OK\r\n\r\n';
+    return HttpStatus.OK;
   }
 };
 
@@ -37,7 +38,6 @@ export class UserAgentHandler implements Handler {
       .setHeader('Content-Length', userAgent.length.toString())
       .build();
   }
-
-
 }
+
 

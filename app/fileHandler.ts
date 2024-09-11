@@ -1,14 +1,15 @@
 import { Handler } from './handler';
 import { Request } from './request';
 import { ResponseBuilder } from './responseBuilder';
+import { HttpStatus } from './types';
 import * as fs from 'fs';
 import * as path from 'path';
 
-export class FileHandler implements Handler {
+export class GetFileHandler implements Handler {
   private basePath: string;
 
   constructor(basePath: string) {
-    this.basePath = basePath; // base directory for serving files
+    this.basePath = basePath; 
   }
 
   public handle(request: Request): string {
@@ -30,8 +31,30 @@ export class FileHandler implements Handler {
         .build();
     } catch (err) {
       console.error(`File not found: ${filePath}`);
-      return 'HTTP/1.1 404 Not Found\r\n\r\n';
+      return HttpStatus.NOT_FOUND;
     }
-  };
- 
+  }
+}
+
+export class PostFileHandler implements Handler {
+
+  public handle(request: Request): string {
+    const parts = request.path.split('/');
+    console.log('parts: ',parts)
+    const filename = parts[2];
+
+    if (!filename) {
+      return HttpStatus.BAD_REQUEST;
+    }
+    const filePath = path.join(__dirname, '..', 'public/uploads' , filename);
+    console.log(filePath)
+    try {
+      fs.writeFileSync(filePath, request.body, 'utf8');
+      return HttpStatus.CREATED;
+    } catch (err) {
+      console.error('Error saving file:', err);
+      return HttpStatus.INTERNAL_SERVER_ERROR;
+    }
+   
+  }
 }
