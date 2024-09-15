@@ -1,6 +1,6 @@
  [![TypeScript](https://badges.frapsoft.com/typescript/code/typescript.svg?v=101)](https://github.com/ellerbrock/typescript-badges/) 
  
-A simple HTTP server written in TypeScript. 
+A simple HTTP server written in TypeScript with support for gzip compression. 
 
 `bun install` && `bun run dev` to start the server. By default it listens on `localhost:4221`
 
