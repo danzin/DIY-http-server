@@ -28,9 +28,15 @@ export class Server {
 
   private handleRequest(rawRequest: string, socket: net.Socket) {
     const response = this.router.route(rawRequest);
-    socket.write(response);
-    socket.end(() => console.log('Connection closed'));
-  }
 
-  
+    if (typeof response === 'string') {
+      socket.write(response);
+    } else {
+      const { headers, body } = response;
+      socket.write(headers);
+      socket.write(body);
+    }
+    socket.end(() => console.log('Connection closed'));
+  };
+
 }

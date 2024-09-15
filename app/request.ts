@@ -1,9 +1,9 @@
 export class Request {
   private method: string = ''
   private rawRequest: string;
-  private path: string;
-  private headers: { [key: string]: string };
-  private body: string = '';
+  public path: string;
+  public headers: { [key: string]: string };
+  public body: string = '';
 
   constructor(rawRequest: string) {
     this.rawRequest = rawRequest;
@@ -44,10 +44,6 @@ export class Request {
     return this.headers[headerName.toLowerCase()];
   }
 
-  public getPath(): string{
-    return this.path;
-  }
-  
   public getMethod(): string {
     return this.method;
   }

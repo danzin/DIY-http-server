@@ -5,6 +5,8 @@ export type Route = {
   handler: Handler;
 };
 
+export type handlerFunc = string | { headers: string, body: Buffer }
+
 export enum HttpMethod {
   GET = 'GET',
   POST = 'POST',
