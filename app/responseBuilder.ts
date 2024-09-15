@@ -36,12 +36,11 @@ export class ResponseBuilder {
       const buffer = Buffer.from(this.body as string, 'utf8'); 
       this.body = zlib.gzipSync(buffer);  
 
+     
       this.setHeader('Content-Encoding', 'gzip');
-      this.setHeader('Content-Length', this.body.length.toString());       
     }
-    if(!contentEncoding){
-      this.setHeader('Content-Length', this.body.length.toString());
-    }
+    this.setHeader('Content-Length', this.body.length.toString());       
+
     
     return this;
   }
