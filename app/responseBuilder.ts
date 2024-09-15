@@ -1,6 +1,7 @@
 import { getContentEncoding } from "./helpers";
 import { Request } from "./request";
 import * as zlib from 'zlib';
+import { handlerFunc } from "./types";
 
 export class ResponseBuilder {
   private status: string;
@@ -35,8 +36,6 @@ export class ResponseBuilder {
     if (contentEncoding === 'gzip') {
       const buffer = Buffer.from(this.body as string, 'utf8'); 
       this.body = zlib.gzipSync(buffer);  
-
-     
       this.setHeader('Content-Encoding', 'gzip');
     }
     this.setHeader('Content-Length', this.body.length.toString());       
@@ -45,7 +44,7 @@ export class ResponseBuilder {
     return this;
   }
 
-  public build(): string | { headers: string, body: Buffer }  {
+  public build(): handlerFunc  {
 
     let headerString = '';
     for (const [key, value] of Object.entries(this.headers)) {

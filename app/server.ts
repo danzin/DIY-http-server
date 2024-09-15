@@ -13,7 +13,7 @@ export class Server {
   }
 
   public start() {
-    const server = net.createServer((socket) => {
+    const server = net.createServer((socket): void => {
       socket.on('data', (data) => {
         console.log('Connection established');
         this.handleRequest(data.toString(), socket)
@@ -26,7 +26,7 @@ export class Server {
     });
   };
 
-  private handleRequest(rawRequest: string, socket: net.Socket) {
+  private handleRequest(rawRequest: string, socket: net.Socket): void {
     const response = this.router.route(rawRequest);
 
     if (typeof response === 'string') {
